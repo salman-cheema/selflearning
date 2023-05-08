@@ -1,0 +1,31 @@
+#Pseudopipeline to give an example for the CI/CD of application
+name: 'Terraform Apply'
+
+on:
+  push:
+    branches:
+      - 'branch_name'
+
+jobs:
+  terraform_apply:
+    name: Apply the plan 
+    runs-on: self-hosted-runner
+
+    defaults:
+      run:
+        working-directory: './terraform/applications/api'
+
+    steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: 1.4.5
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform apply
+        run: terraform apply -no-color -auto-approve

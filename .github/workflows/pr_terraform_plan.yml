@@ -1,0 +1,44 @@
+#Pseudopipeline to give an example for the CI/CD of application
+name: 'Terraform Plan'
+
+on:
+  pull_request:
+    branches:
+      - 'branch_name'
+jobs:
+  terraform_plan:
+    name: Create a plan and post it to the pull request
+    runs-on: self-hosted-runner
+
+    defaults:
+      run:
+        working-directory: './terraform/applications/api'
+
+    steps:
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform with specified version on the runner
+        uses: hashicorp/setup-terraform@v2.0.3
+        with:
+          terraform_version: 1.4.5
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+      - name: Terraform format
+        id: fmt
+        run: terraform fmt -recursive -check
+        continue-on-error: true
+    
+      - name: Terraform validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color -input=false -out=terraform-plan.bin
+        continue-on-error: true
+
+
