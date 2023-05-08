@@ -1,0 +1,19 @@
+#cloud-config
+merge_how: "dict(recurse_array)+list(recurse_array,append)"
+preserve_hostname: true
+users:
+  - default
+  - name: suleman
+    shell: /bin/bash
+    sudo: [ "ALL=(ALL) NOPASSWD:ALL" ]
+    ssh-authorized-keys: 
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrlmYCUmvuf/Uk+gdxwvCD6YLxnjusxi+6sBhP1wjbc/hJyzwXp2SmYhJ9/paVp2lQyrYU4PKOwm/Iz3pZ8eKSeYf6Za1Jir3bGGNs9wptcY03uJFtbKWvSnQBeBX7/7GVn4jN5wpnasXEKUD4QPht5uDwHB5O4YTpwiiIxgswGvcEYKXDnhwn/S8iBXRcT3njbze1G9e5BfNWVZXh0Vw40P1uOaGaYfjgPZq96ZLfrO6yr3D09LHO49YZ23MiLGo+ILTEKAd1tsdljEMUxEMOGPBixOzFjp7NRowVtNitCumFoMCAOuRMmXdAsv/szbR74a3Bor0hZLV3v/FbqLPt suleman@A003-00369
+runcmd:
+  - hostnamectl set-hostname --static ${ec2_hostname}
+  - apt-get update -y && apt-get install -y postgresql-client
+  - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=postgres' -c "create database ${rates_api_db_name}"
+  - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=${rates_api_db_name}' -c "create role ${rates_api_username} login password '${rates_rw_password}'"
+  - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=${rates_api_db_name}' -c "grant all privileges on database ${rates_api_db_name} to ${rates_api_username}"
+  - git clone https://github.com/salman-cheema/selflearning.git
+  - psql 'user=${rates_api_username} password=${rates_rw_password} host=${rds_host} dbname=${rates_api_db_name}' < /selflearning/terraform/applications/api/files/db/rates.sql
+  - find /var/lib/cloud/ -type f -name runcmd -exec rm {} \;

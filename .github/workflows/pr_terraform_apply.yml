@@ -4,12 +4,13 @@ name: 'Terraform Apply'
 on:
   push:
     branches:
-      - 'branch_name'
-
+      - 'master'
+    paths:
+      - 'terraform/applications/api/**'
 jobs:
   terraform_apply:
     name: Apply the plan 
-    runs-on: self-hosted-runner
+    runs-on: ubuntu-latest
 
     defaults:
       run:
@@ -19,13 +20,13 @@ jobs:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
 
-      - name: Setup Terraform with specified version on the runner
-        uses: hashicorp/setup-terraform@v2.0.3
-        with:
-          terraform_version: 1.4.5
+      # - name: Setup Terraform with specified version on the runner
+      #   uses: hashicorp/setup-terraform@v2.0.3
+      #   with:
+      #     terraform_version: 1.4.5
 
-      - name: Terraform init
-        run: terraform init
+      # - name: Terraform init
+      #   run: terraform init
 
-      - name: Terraform apply
-        run: terraform apply -no-color -auto-approve
+      # - name: Terraform apply
+      #   run: terraform apply -no-color -auto-approve
