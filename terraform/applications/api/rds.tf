@@ -8,8 +8,11 @@ module "rds" {
   vpc_id                            = module.vpc.vpc_id
   # vpc_id      = "vpc-0aca9d355c9807d68"
   deletion_protection               = var.rds_deletion_protection
-  subnets                           = module.vpc.private_subnets
-# subnets = ["subnet-0b9511dda4776a9ec", "subnet-0ca28b496d022545b"]
+#Ideally It should be private, I am making it public here:
+# Reason: A person testing the code might run it from local, or form the server which is not in the same VPC.
+ subnets                           = module.vpc.public_subnets
+# subnets                           = module.vpc.private_subnets
+
   backup_retention_period           = var.rds_backup_period
   db_cluster_parameter_group_name   = "${local.env}-parameter-group"
   db_cluster_parameter_group_family = "aurora-postgresql14"

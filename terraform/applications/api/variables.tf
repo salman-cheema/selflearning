@@ -34,7 +34,7 @@ variable "single_nat_gateway" {
 }
 
 variable "rds_instance_type" {
-  default     = "db.t3.medium"
+  default     = "db.t3.small"
   description = "RDS instance type"
 }
 
