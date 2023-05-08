@@ -47,7 +47,7 @@ module "db" {
   apply_immediately                   = true
   iam_database_authentication_enabled = true
   create_security_group               = false
-  publicly_accessible                 = var.publicly_accessible
+  publicly_accessible                 = var.publicly_accessible 
   backtrack_window                    = var.backtrack_window
   monitoring_interval                 = var.monitoring_interval
 }
