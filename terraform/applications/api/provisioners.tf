@@ -22,5 +22,5 @@ resource "null_resource" "rates_api_provisioner" {
 }
 
 output "rates_api_image_tag" {
-  value = concat([local.rates_api_tag_sha],["LATEST"],[local.rates_api_tag_timestamp])
+  value = concat([local.rates_api_tag_sha],["LATEST"])
 }
