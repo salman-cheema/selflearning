@@ -129,3 +129,9 @@ variable "engine_version" {
   description = "RDS Aurora engine version"
   default     = "14.5"
 }
+
+variable "publicly_accessible" {
+  description = "Determines whether instances are publicly accessible. Default `false`"
+  type        = bool
+  default     = null
+}
