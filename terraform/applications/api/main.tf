@@ -27,17 +27,6 @@ provider "aws" {
 
 }
 
-provider "postgresql" {
-  host            = module.rds.rds_writer_internal_endpoint
-  port            = 5432
-  database        = "postgres"
-  username        = module.rds.username
-  password        = module.rds.password
-  sslmode         = "require"
-  superuser       = false
-  connect_timeout = 30
-}
-
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
