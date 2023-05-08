@@ -31,7 +31,7 @@ module "master_rds_password" {
 module "rds_endpoint" {
   source = "../../modules/parameter_store"
   name   = "/selflearning/${local.env}/rds/endpoint"
-  value  = module.rds.rds_writer_internal_endpoint
+  value  = module.rds.host
   overwrite = true
 }
 module "rds_port" {

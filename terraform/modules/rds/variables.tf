@@ -129,8 +129,3 @@ variable "engine_version" {
   description = "RDS Aurora engine version"
   default     = "14.5"
 }
-
-variable "internal_zone_id" {
-  type        = string
-  description = "Route 53 Internal Zone ID"
-}

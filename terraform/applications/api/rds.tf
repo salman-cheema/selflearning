@@ -11,7 +11,6 @@ module "rds" {
   subnets                           = module.vpc.private_subnets
 # subnets = ["subnet-0b9511dda4776a9ec", "subnet-0ca28b496d022545b"]
   backup_retention_period           = var.rds_backup_period
-  internal_zone_id                  = aws_route53_zone.internal_selflearning.zone_id
   db_cluster_parameter_group_name   = "${local.env}-parameter-group"
   db_cluster_parameter_group_family = "aurora-postgresql14"
   allowed_security_groups           = [module.sg_rds.security_group_id]

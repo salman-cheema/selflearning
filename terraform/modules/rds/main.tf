@@ -42,7 +42,6 @@ module "db" {
   storage_encrypted                   = true
   create_monitoring_role              = true
   enabled_cloudwatch_logs_exports     = ["postgresql"]
-  #create_cloudwatch_log_group         = true
   auto_minor_version_upgrade          = true
   instances                           = local.instances
   apply_immediately                   = true
@@ -102,20 +101,4 @@ resource "aws_cloudwatch_metric_alarm" "db_connection_alarm" {
   dimensions = {
     DBClusterIdentifier = "${local.name_with_env}"
   }
-}
-
-resource "aws_route53_record" "rds_reader_internal" {
-  zone_id = var.internal_zone_id
-  name    = "${var.name}-reader"
-  type    = "CNAME"
-  ttl     = "3600"
-  records = [module.db.cluster_reader_endpoint]
-}
-
-resource "aws_route53_record" "rds_writer_internal" {
-  zone_id = var.internal_zone_id
-  name    = "${var.name}-writer"
-  type    = "CNAME"
-  ttl     = "3600"
-  records = [module.db.cluster_endpoint]
 }

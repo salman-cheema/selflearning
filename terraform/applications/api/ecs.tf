@@ -49,7 +49,7 @@ module "ecs_rates_api_container_definition" {
     },
     {
       name  = "DB_HOST"
-      value = module.rds.rds_writer_internal_endpoint
+      value = module.rds_endpoint.value
     },
     { name  = "PASSWORD"
       value = module.rates_rds_password.value

@@ -8,12 +8,6 @@ output "cluster_identifier" {
   description = "DB Cluster identifier"
 }
 
-output "reader_endpoint" {
-  value       = module.db.cluster_reader_endpoint
-  description = "RDS route53 Reader endpoint DNS record"
-  sensitive   = true
-}
-
 output "rds_cluster_arn" {
   value       = module.db.cluster_arn
   description = "The ARN of the RDS instance"
