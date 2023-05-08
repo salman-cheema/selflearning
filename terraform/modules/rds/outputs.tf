@@ -28,15 +28,3 @@ output "port" {
   description = "RDS port"
   sensitive   = true
 }
-
-output "rds_writer_internal_endpoint" {
-  value       = aws_route53_record.rds_writer_internal.fqdn
-  description = "RDS route53 Writer endpoint DNS record"
-  sensitive   = true
-}
-
-output "rds_reader_internal_endpoint" {
-  value       = aws_route53_record.rds_reader_internal.fqdn
-  description = "RDS route53 Reader endpoint DNS record"
-  sensitive   = true
-}
