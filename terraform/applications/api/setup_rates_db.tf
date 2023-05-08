@@ -34,10 +34,10 @@ resource "null_resource" "setup_db" {
     depends_on = [ module.rds] #wait for the rds to be ready
   provisioner "local-exec" {
     command     = <<EOT
-    psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=postgres' -c "create database ${local.rates_api_db_name}"
-    psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' -c "create user ${local.rates_api_username} with encrypted password '"${random_password.rates_rw_password.result}"'"
-    psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' -c "grant all privileges on database ${local.rates_api_db_name} to ${local.rates_api_username}"
-    psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' < files/db/rates.sql
+    "psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=postgres' -c "create database ${local.rates_api_db_name}""
+    "psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' -c "create user ${local.rates_api_username} with encrypted password '"${random_password.rates_rw_password.result}"'""
+    "psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' -c "grant all privileges on database ${local.rates_api_db_name} to ${local.rates_api_username}""
+    "psql 'user=${local.rates_api_username} password=${module.rates_rds_password.value} host=${module.rds.rds_writer_internal_endpoint} dbname=${local.rates_api_db_name}' < files/db/rates.sql"
     EOT
     interpreter = ["/bin/bash", "-c"]
   }
