@@ -1,7 +1,10 @@
 locals {
   cluster_name = "${local.env}-selflearning-rates-batch-jobs"
   rates_batch_job_container_name = "${local.env}_rates_batch_jobs"
+  rates_batch_jobs_tag_timestamp = formatdate("YYYYMMDDhhmm", timestamp())
+  rates_batch_jobs_tag_sha = sha1(join("", [for f in fileset("${path.module}/files/", "**"): filesha1("${path.module}/files/${f}")]))
 }
+
 module "ecs_rates_batch_jobs_cluster" {
   source       = "terraform-aws-modules/ecs/aws"
   version      = "4.1.2"
