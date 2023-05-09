@@ -5,6 +5,8 @@ resource "aws_key_pair" "deployer" {
   key_name   = local.bastion_key_name
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrlmYCUmvuf/Uk+gdxwvCD6YLxnjusxi+6sBhP1wjbc/hJyzwXp2SmYhJ9/paVp2lQyrYU4PKOwm/Iz3pZ8eKSeYf6Za1Jir3bGGNs9wptcY03uJFtbKWvSnQBeBX7/7GVn4jN5wpnasXEKUD4QPht5uDwHB5O4YTpwiiIxgswGvcEYKXDnhwn/S8iBXRcT3njbze1G9e5BfNWVZXh0Vw40P1uOaGaYfjgPZq96ZLfrO6yr3D09LHO49YZ23MiLGo+ILTEKAd1tsdljEMUxEMOGPBixOzFjp7NRowVtNitCumFoMCAOuRMmXdAsv/szbR74a3Bor0hZLV3v/FbqLPt suleman@A003-00369"
 }
+# To let the users make coonection to private RDS
+# Ideally it should be through VPN + transitgateway
 module "ec2" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
   version                = "3.2.0"
