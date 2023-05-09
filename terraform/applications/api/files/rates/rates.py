@@ -65,7 +65,7 @@ def create_app():
         })
 
     @app.route("/healthy")
-    def hello_world():
+    def get_health():
         return conn
     
     @app.route("/rates", methods=["GET"])
