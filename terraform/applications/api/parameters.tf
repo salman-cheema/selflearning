@@ -40,3 +40,11 @@ module "rds_port" {
   value  = module.rds.port
   overwrite = true
 }
+
+output "rds_endpoint" {
+  value = module.rds_endpoint.value
+}
+
+output "rates_rds_password" {
+  value = module.rates_rds_password.value
+}
