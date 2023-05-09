@@ -31,6 +31,7 @@ resource "aws_cloudwatch_log_group" "ecs_task_rates_batch_jobs" {
   retention_in_days = 90
 }
 module "ecs_rates_batch_jobs_container_definition" {
+  count           = can(data.terraform_remote_state.outputs.rds_endpoint) ? 1 : 0
   source          = "cloudposse/ecs-container-definition/aws"
   version         = "0.58.1"
   container_name  = local.rates_batch_job_container_name
@@ -39,18 +40,18 @@ module "ecs_rates_batch_jobs_container_definition" {
   environment = [
     {
       name  = "DB_NAME"
-      value = local.rates_batch_job_db_name
+      value = try(data.terraform_remote_state.outputs.rates_api_db_name, "")
     },
     {
       name  = "DB_USER"
-      value = local.rates_batch_job_username
+      value = try(data.terraform_remote_state.outputs.rates_api_username, "")
     },
     {
       name  = "DB_HOST"
-      value = module.rds.rds_writer_internal_endpoint
+      value = try(data.terraform_remote_state.outputs.rds_endpoint, "")
     },
-    { name  = "PASSWORD"
-      value = module.rates_rds_password.value
+    { name  = "RATES_RW_PASSWORD"
+      value = try(data.terraform_remote_state.outputs.rates_rds_password, "")
     }
   ]
   log_configuration = {
@@ -62,7 +63,8 @@ module "ecs_rates_batch_jobs_container_definition" {
     }
   }
 }
-resource "aws_ecs_task_definition" "rates_batch_jobs" {
+resource "aws_ecs_task_definition" "task_def_rates_batch_jobs" {
+  count           = can(data.terraform_remote_state.outputs.rds_endpoint) ? 1 : 0
   family                   = "${local.env}-rates_batch_jobs"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = module.rates_batch_jobs_task_definition_role.iam_role_arn
@@ -70,7 +72,7 @@ resource "aws_ecs_task_definition" "rates_batch_jobs" {
   network_mode             = "awsvpc"
   cpu             = 1024
   memory             = 2048
-  container_definitions    = module.ecs_rates_batch_jobs_container_definition.json_map_encoded_list
+  container_definitions    = module.ecs_rates_batch_jobs_container_definition[0].json_map_encoded_list
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
