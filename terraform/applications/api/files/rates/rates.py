@@ -66,7 +66,7 @@ def create_app():
 
     @app.route("/healthy")
     def get_health():
-        return conn
+        return get_rows("SELECT count(*) from rates" )
     
     @app.route("/rates", methods=["GET"])
     def get_rates():
