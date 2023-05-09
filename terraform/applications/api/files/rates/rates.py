@@ -64,6 +64,10 @@ def create_app():
             "message": "Hello world new deployment retrigger!"
         })
 
+    @app.route("/healthy")
+    def hello_world():
+        return conn
+    
     @app.route("/rates", methods=["GET"])
     def get_rates():
         """
