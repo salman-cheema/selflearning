@@ -16,6 +16,7 @@ module "ec2" {
   subnet_id                   = element(module.vpc.public_subnets,0)
   user_data                   = data.template_cloudinit_config.config.rendered
   associate_public_ip_address = true
+  depends_on = [ module.rds ]
 
 }
 
