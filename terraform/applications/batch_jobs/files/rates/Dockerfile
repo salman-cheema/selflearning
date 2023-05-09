@@ -5,9 +5,9 @@ WORKDIR /rates
 RUN apt-get update && apt-get install -y \
     python3-psycopg2
 
-RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade pip3
 
-RUN pip install -y \
+RUN pip3 install -y \
     psycopg2 \
     boto3 \
     pandas
