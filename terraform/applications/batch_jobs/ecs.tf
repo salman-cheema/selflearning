@@ -34,7 +34,7 @@ module "ecs_rates_batch_jobs_container_definition" {
   source          = "cloudposse/ecs-container-definition/aws"
   version         = "0.58.1"
   container_name  = local.rates_batch_job_container_name
-  container_image = var.rate_api_image_to_deploy == "" ? "${module.ecr_rates_batch_jobs.repository_url}:${local.ecr_rates_batch_jobs_tag_sha}" :  "${module.ecr_rates_batch_jobs.repository_url}:${var.rate_api_image_to_deploy}"
+  container_image = var.rate_api_image_to_deploy == "" ? "${module.ecr_rates_batch_jobs.repository_url}:${local.rates_batch_jobs_tag_sha}" :  "${module.ecr_rates_batch_jobs.repository_url}:${var.rate_api_image_to_deploy}"
   readonly_root_filesystem = false
   environment = [
     {
