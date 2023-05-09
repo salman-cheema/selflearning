@@ -23,6 +23,15 @@ provider "aws" {
 
 }
 
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
+locals {
+  env                 = terraform.workspace
+  aws_region          = data.aws_region.current.name
+  aws_accountId       = data.aws_caller_identity.current.account_id
+}
+
 data "terraform_remote_state" "rates_api_app" {
   backend   = "s3"
   workspace = local.env
