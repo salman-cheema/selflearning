@@ -12,7 +12,7 @@ module "ec2" {
   ami                    = "ami-09e67e426f25ce0d7"
   instance_type          = "t2.small"
   key_name               = local.bastion_key_name
-  vpc_security_group_ids = module.sg_ec2_bastion.security_group_id
+  vpc_security_group_ids = [module.sg_ec2_bastion.security_group_id]
   subnet_id                   = element(module.vpc.public_subnets,0)
   user_data                   = data.template_cloudinit_config.config.rendered
   associate_public_ip_address = true
