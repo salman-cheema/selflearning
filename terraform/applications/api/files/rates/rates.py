@@ -63,10 +63,6 @@ def create_app():
         return jsonify({
             "message": "Hello world new deployment healthy statusss"
         })
-
-    @app.route("/healthy", methods=["GET"])
-    def get_health():
-        return get_rows("SELECT count(*) from rates" )
     
     @app.route("/rates", methods=["GET"])
     def get_rates():

@@ -86,6 +86,7 @@ resource "aws_ecs_service" "rates_api" {
   desired_count                      = 1
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
+# To let the dbdump restore in case of first deployment from terraform
   health_check_grace_period_seconds  = 300
   launch_type                        = "FARGATE"
   load_balancer {
