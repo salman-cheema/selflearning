@@ -12,7 +12,7 @@ runcmd:
   - hostnamectl set-hostname --static ${ec2_hostname}
   - apt-get update -y && apt-get install -y postgresql-client
   - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=postgres' -c "create database ${rates_api_db_name}"
-  - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=${rates_api_db_name}' -c "create user ${rates_api_username} with encrypted password '${rates_rw_password}'"
+  - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=${rates_api_db_name}' -c "create role ${rates_api_username} login password '${rates_rw_password}'"
   - psql 'user=${master_rds_username} password=${master_rds_password} host=${rds_host} dbname=${rates_api_db_name}' -c "grant all privileges on database ${rates_api_db_name} to ${rates_api_username}"
   - git clone https://github.com/salman-cheema/selflearning.git
   - psql 'user=${rates_api_username} password=${rates_rw_password} host=${rds_host} dbname=${rates_api_db_name}' < /selflearning/terraform/applications/api/files/db/rates.sql
