@@ -10,7 +10,7 @@ s3 = boto3.resource('s3')
 # bucket = os.environ['bucket']
 # key = os.environ['key']
 def main():
-    df = pd.read_sql_query('select * from company',con=postgres_connection())
+    df = pd.read_sql_query('select * from rates',con=postgres_connection())
     # s3.Bucket(bucket).download_file(key, '/tmp/file')
     # reading csv files
     # df=pd.read_csv('/tmp/file')
