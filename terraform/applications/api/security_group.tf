@@ -23,7 +23,22 @@ module "sg_rds" {
   ]
   egress_with_cidr_blocks = local.all_all_rule
 }
+module "sg_ec2_bastion" {
+  source      = "terraform-aws-modules/security-group/aws"
+  version     = "4.9.0"
+  name        = "selflearning-${local.env}-bastion-sg"
+  description = "${local.env} Bastion security group"
+  # vpc_id      = "vpc-0aca9d355c9807d68"
+  vpc_id      = module.vpc.vpc_id
 
+  ingress_with_cidr_blocks = [
+    {
+      rule        = "ssh-tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+  ]
+  egress_with_cidr_blocks = local.all_all_rule
+}
 module "sg_rates_api" {
   source      = "terraform-aws-modules/security-group/aws"
   version     = "4.9.0"
