@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python3 -m pip install --upgrade pip
 
-RUN pip3 install -y \
-    psycopg2 \
+RUN pip3 install psycopg2 \
     boto3 \
     pandas \
     sqlalchemy
