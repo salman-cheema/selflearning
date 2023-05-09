@@ -43,8 +43,10 @@ module "rds_port" {
 
 output "rds_endpoint" {
   value = module.rds_endpoint.value
+  sensitive = true
 }
 
 output "rates_rds_password" {
   value = module.rates_rds_password.value
+  sensitive = true
 }
