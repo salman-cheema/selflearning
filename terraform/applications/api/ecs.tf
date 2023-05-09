@@ -97,13 +97,12 @@ resource "aws_ecs_service" "rates_api" {
     network_configuration {
     security_groups = [module.sg_rates_api.security_group_id]
     subnets         = module.vpc.private_subnets
-# subnets = ["subnet-0b9511dda4776a9ec", "subnet-0ca28b496d022545b"]
   }
     lifecycle {
     ignore_changes = [desired_count]
   }
 
-  depends_on = [module.rates_api_alb, null_resource.rates_api_provisioner]
+  depends_on = [module.rates_api_alb, null_resource.rates_api_provisioner, module.ec2]
 }
 
 resource "aws_appautoscaling_target" "rates_api" {
