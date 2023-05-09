@@ -31,7 +31,7 @@ resource "aws_cloudwatch_log_group" "ecs_task_rates_batch_jobs" {
   retention_in_days = 90
 }
 module "ecs_rates_batch_jobs_container_definition" {
-  count           = can(data.terraform_remote_state.rates_api_appoutputs.rds_endpoint) ? 1 : 0
+  count           = can(data.terraform_remote_state.rates_api_app.outputs.rds_endpoint) ? 1 : 0
   source          = "cloudposse/ecs-container-definition/aws"
   version         = "0.58.1"
   container_name  = local.rates_batch_job_container_name
@@ -40,18 +40,18 @@ module "ecs_rates_batch_jobs_container_definition" {
   environment = [
     {
       name  = "DB_NAME"
-      value = try(data.terraform_remote_state.rates_api_appoutputs.rates_api_db_name, "")
+      value = try(data.terraform_remote_state.rates_api_app.outputs.rates_api_db_name, "")
     },
     {
       name  = "DB_USER"
-      value = try(data.terraform_remote_state.rates_api_appoutputs.rates_api_username, "")
+      value = try(data.terraform_remote_state.rates_api_app.outputs.rates_api_username, "")
     },
     {
       name  = "DB_HOST"
-      value = try(data.terraform_remote_state.rates_api_appoutputs.rds_endpoint, "")
+      value = try(data.terraform_remote_state.rates_api_app.outputs.rds_endpoint, "")
     },
     { name  = "RATES_RW_PASSWORD"
-      value = try(data.terraform_remote_state.rates_api_appoutputs.rates_rds_password, "")
+      value = try(data.terraform_remote_state.rates_api_app.outputs.rates_rds_password, "")
     }
   ]
   log_configuration = {
@@ -64,7 +64,7 @@ module "ecs_rates_batch_jobs_container_definition" {
   }
 }
 resource "aws_ecs_task_definition" "task_def_rates_batch_jobs" {
-  count           = can(data.terraform_remote_state.rates_api_appoutputs.rds_endpoint) ? 1 : 0
+  count           = can(data.terraform_remote_state.rates_api_app.outputs.rds_endpoint) ? 1 : 0
   family                   = "${local.env}-rates_batch_jobs"
   requires_compatibilities = ["FARGATE"]
   execution_role_arn       = module.rates_batch_jobs_task_definition_role.iam_role_arn
