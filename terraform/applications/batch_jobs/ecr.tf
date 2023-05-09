@@ -3,7 +3,7 @@ module "ecr_rates_batch_jobs" {
   name   = "${local.env}-rates-batch-jobs"
   tags   = local.default_tags
   read_write_access_arns = [
-    module.rates_api_task_definition_role.iam_role_arn
+    module.rates_batch_jobs_task_definition_role.iam_role_arn
   ]
   image_tag_mutability = "MUTABLE"
   lifecycle_policy = jsonencode({
