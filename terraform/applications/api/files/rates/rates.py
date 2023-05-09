@@ -61,7 +61,7 @@ def create_app():
     @app.route("/")
     def hello_world():
         return jsonify({
-            "message": "Hello world new deployment retrigger!"
+            "message": "Hello world new deployment healthy status"
         })
 
     @app.route("/healthy")
