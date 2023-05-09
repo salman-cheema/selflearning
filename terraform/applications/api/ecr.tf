@@ -2,7 +2,6 @@ module "ecr_rates_api" {
   source = "../../modules/ecr"
   name   = "${local.env}-rates-api"
   tags   = local.default_tags
-  force_delete = true
   read_write_access_arns = [
     module.rates_api_task_definition_role.iam_role_arn
   ]

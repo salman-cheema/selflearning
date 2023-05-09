@@ -2,7 +2,6 @@ module "ecr_rates_batch_jobs" {
   source = "../../modules/ecr"
   name   = "${local.env}-rates-batch-jobs"
   tags   = local.default_tags
-  force_delete = true
   read_write_access_arns = [
     module.rates_batch_jobs_task_definition_role.iam_role_arn
   ]

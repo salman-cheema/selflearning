@@ -6,4 +6,5 @@ module "ecr" {
   repository_lifecycle_policy       = var.lifecycle_policy
   tags                              = var.tags
   repository_image_tag_mutability   = var.image_tag_mutability
+  repository_force_delete           = true
 }
