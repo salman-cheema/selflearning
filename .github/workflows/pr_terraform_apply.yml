@@ -6,7 +6,7 @@ on:
     branches:
       - 'master'
     paths:
-      - '/terraform/applications/api/**'
+    - '/terraform/applications/api/**'
 jobs:
   terraform_apply:
     name: Apply the plan 
