@@ -8,7 +8,7 @@ on:
 jobs:
   terraform_plan:
     name: Create a plan and post it to the pull request
-    runs-on: self-hosted-runner
+    runs-on: ubuntu-latest
 
     defaults:
       run:

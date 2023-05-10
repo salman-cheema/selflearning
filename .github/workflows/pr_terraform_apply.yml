@@ -10,7 +10,7 @@ on:
 jobs:
   terraform_apply:
     name: Apply the plan 
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
 
     defaults:
       run:
