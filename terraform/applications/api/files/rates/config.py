@@ -5,3 +5,4 @@ DB = {
     "host": os.environ["DB_HOST"],
     "password" : os.environ["PASSWORD"]
 }
+
