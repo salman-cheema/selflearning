@@ -5,6 +5,8 @@ on:
   pull_request:
     branches:
       - 'master'
+    paths:
+      - '/terraform/applications/api/**'
 jobs:
   terraform_plan:
     name: Create a plan and post it to the pull request
