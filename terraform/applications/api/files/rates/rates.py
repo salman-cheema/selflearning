@@ -7,7 +7,6 @@ from werkzeug.exceptions import BadRequest
 
 import config
 
-
 def get_db_conn(db_config):
     """ Create a database connection. """
     return psycopg2.connect(
