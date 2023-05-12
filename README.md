@@ -122,3 +122,6 @@
 - To create a new image for the task of batch jobs terraform will be used the same way as we have done for API, just change the code logic present in the folder terraform/application/batch_jobs/rates/rates_insertion.py and run terraform it will create a new image upload it to s3 and when a new task will be run it will have new code.
 - We can create multiple environments for the batch jobs as we have done for the API using terraform workspace and developers can use it for testing, same code will be used for all env, just need to change parameters.
 - To make the process more smooth for the developers we can set up GitHub actions that do this work which we are doing manually, like terraform plan and terraform apply, sample of pseudocode is attached.
+
+## Inspiration for creating a solution:
+- https://www.youtube.com/watch?v=FBALeXG8WTI
