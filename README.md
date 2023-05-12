@@ -119,6 +119,6 @@
     - lambda filters the logs like ( failed: for task "rates" for S3 Bukcet: "ABC" Object_key "ABC" )  and pass the message to SQS form where we can give it a retry, it will keep on happening until our file is processed.
 
 ## Note:
-- To create new image for the task of batch jobs terraform will be used as the same way as we have done for API, just change the code logic present at folder terraform/application/batch_jobs/rates/rates_insertion.py and run terraform it will creaet new image upload it ot s3 and when new task will be run it will have new code.
-- We can create multiple environments for the batch jobs as we have done for the API using terraform workspace and developers can sue it for tesitng, same code will be use for all env, just need to change parameters.
-- To make the process more smooth fort the developers we can setup github action which actually do this work which we are doing manually , like terraform plan adn terraform apply, sample of pseudocode is attached.
+- To create a new image for the task of batch jobs terraform will be used the same way as we have done for API, just change the code logic present in the folder terraform/application/batch_jobs/rates/rates_insertion.py and run terraform it will create a new image upload it to s3 and when a new task will be run it will have new code.
+- We can create multiple environments for the batch jobs as we have done for the API using terraform workspace and developers can use it for testing, same code will be used for all env, just need to change parameters.
+- To make the process more smooth for the developers we can set up GitHub actions that do this work which we are doing manually, like terraform plan and terraform apply, sample of pseudocode is attached.
