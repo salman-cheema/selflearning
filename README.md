@@ -1,7 +1,7 @@
 ### Backend S3 bucket and Dynamodb
 
 ### Clone the repo
-- git clone git@github.com:salman-cheema/selflearning.git
+- git clone https://github.com/salman-cheema/selflearning.git
 - Setup backend:
     - Create an S3 bucket at aws with a name as you like and replace it in the file
         - `selflearning/terraform/applications/api/backend.tf`
