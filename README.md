@@ -29,7 +29,7 @@
 - After terraform apply is complete it will generate outputs:
     - Get the value ALB DNS `rates_api_alb_dns` and hit it in the browser
         - Response will be shown:  `"Hello world!"`
-## Question asked 1:
+## Scenario 1:
 - `Code updates need to be pushed out frequently. This needs to be done without the risk of stopping a data update already being processed, nor a data response being lost`
     - Change the code of the Flask application:
         - Change this message `"Hello world!"` to `"Hello world! again new deployment"` at file
@@ -55,7 +55,7 @@
             - You cna use [apache bench](https://diamantidis.github.io/2020/07/15/load-testing-with-apache-bench) for the testing as well which is pretty good.
             - Verify the cloudwatch alarm is in alarm state after that you will see a new task getting registered to handle the load.
 
-## Question asked 2:
+## Scenario 2:
 - `For development and staging purposes, you need to start up a number of scaled-down versions of the system.`
     - The terraform application is designed in such a way that you can create as much environment as you want, here we have used terraform workspace approach, just pass the variables and the same code will work for the dev and prod as well.
     - we can parameterize everything like different VPC for the dev and prod, RDS types and count as per the environment, ECS tasks memory and CPU, Autoscaling as per the env anything... just pass them as parameters.
@@ -84,7 +84,7 @@
 - After terraform apply is complete
 
 ## Test your Data ingestion pipeline:
-### Question 1:
+### Scenario 1:
 - `Diagram and description of one concrete solution?`
     - Go to the S3 service, it must have created a bucket with the suffix `-rates`
     - Upload multiple files into it, like 5 at a time or more.
@@ -95,7 +95,7 @@
         - I  real-world example ( you can upload different JSON files to S3, ECS task must have download permission, then the script parses it and upload it to DB)
         - Both the S3 download and DB connections are handled!
 
-### Question 2:
+### Scenario 2:
 - `Please elaborate on the advantages and limitations of your chosen solution
     - Advantages:
         - It is highly scalable and available as we can run multiple ECS tasks as per our files.
@@ -107,13 +107,18 @@
         - 2. What about the CPU and RAM of the task required by the tasks?
             - No doubt not every task required the same CPU and RAM, it must be dependent on the size of the file and the logic of the code present inside the ECS task.
         
-### Question 3:
+### Scenario 3:
 `How would you set up monitoring to identify bottlenecks as the load grows?`
 `How can those bottlenecks be addressed in the future?`
 -  Create a logic that set the RAM and CPU of the ECS task as per the file size being uploaded to S3.
 - Setup a Cloud watch alarm that monitors the CPU of the task and if exceeds the limit it means our CPU and memory allocated to the task were not sufficient ( like this we can do benchmarking at the start) in future, if we see the CPU again, then we must see our logic of our transforming data inside the containers might need more CPU.
-### Question 4
+### Scenario 4
 - What if our task got failed in between and could not process a file?
     - Push your ECS task cloudWatch logs to S3.
     - Create a notification event in S3 on the 'ObjectCreated' event and use that to trigger a Lambda function.
     - lambda filters the logs like ( failed: for task "rates" for S3 Bukcet: "ABC" Object_key "ABC" )  and pass the message to SQS form where we can give it a retry, it will keep on happening until our file is processed.
+
+## Note:
+- To create new image for the task of batch jobs terraform will be used as the same way as we have done for API, just change the code logic present at folder terraform/application/batch_jobs/rates/rates_insertion.py and run terraform it will creaet new image upload it ot s3 and when new task will be run it will have new code.
+- We can create multiple environments for the batch jobs as we have done for the API using terraform workspace and developers can sue it for tesitng, same code will be use for all env, just need to change parameters.
+- To make the process more smooth fort the developers we can setup github action which actually do this work which we are doing manually , like terraform plan adn terraform apply, sample of pseudocode is attached.
