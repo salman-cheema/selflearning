@@ -46,8 +46,8 @@ jobs:
   terraform_apply:
     name: Apply the plan
     runs-on: ubuntu-latest
-      needs: Pre-Dev-Steps
-      environment:
-        name: dev
+    needs: Pre-Dev-Steps
+    environment:
+      name: dev
       - name: Terraform apply
         run: terraform apply -no-color -auto-approve
