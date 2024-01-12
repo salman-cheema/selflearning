@@ -49,5 +49,6 @@ jobs:
     needs: terraform_plan
     environment:
       name: dev
+    steps:
       - name: Terraform apply
         run: terraform apply -no-color -auto-approve
