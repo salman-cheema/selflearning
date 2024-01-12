@@ -46,7 +46,7 @@ jobs:
   terraform_apply:
     name: Apply the plan
     runs-on: ubuntu-latest
-    needs: Pre-Dev-Steps
+    needs: terraform_plan
     environment:
       name: dev
       - name: Terraform apply
